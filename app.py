@@ -17,15 +17,18 @@ st.markdown("Bienvenue sur l’outil de prédiction et d’explication des déci
 # -----------------------------
 @st.cache_data
 def load_reference_data():
-    file_id = "1kArxbD19aABbk-GhQYdfpauEBC-L6vBV"
-    url = f"https://drive.usercontent.google.com/download?id={file_id}&export=download"
+    url = "https://nrdnsniperbot.site/application_train.csv"  
 
     response = requests.get(url)
     if response.status_code != 200:
-        st.error("Erreur de téléchargement du fichier CSV depuis Google Drive.")
+        st.error("Erreur lors du téléchargement du fichier CSV.")
         return pd.DataFrame()
 
-    df = pd.read_csv(io.StringIO(response.text))
+    try:
+        df = pd.read_csv(io.StringIO(response.text))
+    except Exception as e:
+        st.error(f"Erreur de lecture du fichier : {e}")
+        return pd.DataFrame()
 
     if "CODE_GENDER" not in df.columns:
         st.write("Colonnes du fichier chargé :", df.columns.tolist())
