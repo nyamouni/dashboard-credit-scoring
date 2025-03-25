@@ -49,21 +49,6 @@ def load_reference_data():
 
     return df_sampled.reset_index(drop=True)
 
-@st.cache_data
-def load_reference_data():
-    df = pd.read_csv("data/application_train.csv")
-    df["APP_CODE_GENDER"] = df["CODE_GENDER"].map({"F": 0, "M": 1})
-    df["APP_FLAG_OWN_CAR"] = df["FLAG_OWN_CAR"].map({"N": 0, "Y": 1})
-    df["APP_FLAG_OWN_REALTY"] = df["FLAG_OWN_REALTY"].map({"N": 0, "Y": 1})
-    df.rename(columns={
-        "AMT_INCOME_TOTAL": "APP_AMT_INCOME_TOTAL",
-        "AMT_CREDIT": "APP_AMT_CREDIT",
-        "EXT_SOURCE_2": "APP_EXT_SOURCE_2",
-        "EXT_SOURCE_3": "APP_EXT_SOURCE_3"
-    }, inplace=True)
-    df_sampled = df.sample(frac=0.25, random_state=42)
-    return df_sampled.reset_index(drop=True)
-
 df_ref = load_reference_data()
 
 # -----------------------------
