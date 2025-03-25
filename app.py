@@ -6,6 +6,7 @@ import requests
 import pickle
 import plotly.graph_objects as go
 import shap
+import matplotlib.pyplot as plt
 
 # -----------------------------
 # CONFIG APP
