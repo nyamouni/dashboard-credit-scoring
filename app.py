@@ -38,7 +38,8 @@ def load_reference_data():
     if "CODE_GENDER" in df.columns:
         df["APP_CODE_GENDER"] = df["CODE_GENDER"].map({"F": 0, "M": 1})
     else:
-        st.error("La colonne 'CODE_GENDER' est absente du fichier chargé.")
+        df = pd.read_csv(io.StringIO(response.text))
+        st.write("Colonnes du fichier chargé :", df.columns.tolist())  # TEMPORARY DEBUG
         st.stop()
 
     df["APP_CODE_GENDER"] = df["CODE_GENDER"].map({"F": 0, "M": 1})
