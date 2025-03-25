@@ -6,6 +6,7 @@ import plotly.express as px
 import shap
 import pickle
 import matplotlib.pyplot as plt
+import io
 
 # -----------------------------
 # CONFIG APP
