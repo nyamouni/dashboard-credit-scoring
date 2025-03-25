@@ -1,12 +1,9 @@
 import streamlit as st
-import requests
 import pandas as pd
-import plotly.graph_objects as go
-import plotly.express as px
-import shap
-import pickle
-import matplotlib.pyplot as plt
+import numpy as np
 import io
+import requests
+import pickle
 
 # -----------------------------
 # CONFIG APP
@@ -18,11 +15,8 @@ st.markdown("Bienvenue sur l’outil de prédiction et d’explication des déci
 # -----------------------------
 # DONNÉES DE RÉFÉRENCE
 # -----------------------------
-import requests
-
 @st.cache_data
 def load_reference_data():
-    # ID du fichier partagé sur Google Drive
     file_id = "1kArxbD19aABbk-GhQYdfpauEBC-L6vBV"
     url = f"https://drive.google.com/uc?export=download&id={file_id}"
 
@@ -31,15 +25,10 @@ def load_reference_data():
         st.error("Erreur de téléchargement du fichier CSV depuis Google Drive.")
         return pd.DataFrame()
 
-    # Charger le CSV depuis les données téléchargées
     df = pd.read_csv(io.StringIO(response.text))
 
-    # Traitements comme avant...
-    if "CODE_GENDER" in df.columns:
-        df["APP_CODE_GENDER"] = df["CODE_GENDER"].map({"F": 0, "M": 1})
-    else:
-        df = pd.read_csv(io.StringIO(response.text))
-        st.write("Colonnes du fichier chargé :", df.columns.tolist())  # TEMPORARY DEBUG
+    if "CODE_GENDER" not in df.columns:
+        st.write("Colonnes du fichier chargé :", df.columns.tolist())
         st.stop()
 
     df["APP_CODE_GENDER"] = df["CODE_GENDER"].map({"F": 0, "M": 1})
@@ -53,9 +42,7 @@ def load_reference_data():
         "EXT_SOURCE_3": "APP_EXT_SOURCE_3"
     }, inplace=True)
 
-    df_sampled = df.sample(frac=0.25, random_state=42)
-
-    return df_sampled.reset_index(drop=True)
+    return df.sample(frac=0.25, random_state=42).reset_index(drop=True)
 
 df_ref = load_reference_data()
 
