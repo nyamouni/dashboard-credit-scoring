@@ -5,6 +5,7 @@ import io
 import requests
 import pickle
 import plotly.graph_objects as go
+import shap
 
 # -----------------------------
 # CONFIG APP
