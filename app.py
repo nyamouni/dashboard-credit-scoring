@@ -4,6 +4,7 @@ import numpy as np
 import io
 import requests
 import pickle
+import plotly.graph_objects as go
 
 # -----------------------------
 # CONFIG APP
