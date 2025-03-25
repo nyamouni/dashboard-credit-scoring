@@ -35,6 +35,12 @@ def load_reference_data():
     df = pd.read_csv(io.StringIO(response.text))
 
     # Traitements comme avant...
+    if "CODE_GENDER" in df.columns:
+        df["APP_CODE_GENDER"] = df["CODE_GENDER"].map({"F": 0, "M": 1})
+    else:
+        st.error("La colonne 'CODE_GENDER' est absente du fichier chargé.")
+        st.stop()
+
     df["APP_CODE_GENDER"] = df["CODE_GENDER"].map({"F": 0, "M": 1})
     df["APP_FLAG_OWN_CAR"] = df["FLAG_OWN_CAR"].map({"N": 0, "Y": 1})
     df["APP_FLAG_OWN_REALTY"] = df["FLAG_OWN_REALTY"].map({"N": 0, "Y": 1})
