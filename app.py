@@ -18,7 +18,7 @@ st.markdown("Bienvenue sur l’outil de prédiction et d’explication des déci
 @st.cache_data
 def load_reference_data():
     file_id = "1kArxbD19aABbk-GhQYdfpauEBC-L6vBV"
-    url = f"https://drive.google.com/uc?export=download&id={file_id}"
+    url = f"https://drive.usercontent.google.com/download?id={file_id}&export=download"
 
     response = requests.get(url)
     if response.status_code != 200:
