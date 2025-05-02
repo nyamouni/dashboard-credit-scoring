@@ -1,77 +1,86 @@
-# 🌍 Projet Big Data – Traitement distribué d’images de fruits sur le cloud
+# 📊 Dashboard de Credit Scoring – Projet Data Science
 
-## 🚀 Contexte du projet
+## 🎯 Contexte
 
-Dans le cadre de ma mission en tant que Data Scientist chez **Fruits!**, une jeune start-up AgriTech, j’ai été chargé de construire les **premières briques d’une architecture Big Data** sur le cloud AWS, afin de traiter à grande échelle des images de fruits.
+Dans le cadre d’un projet simulé en environnement professionnel, j’ai intégré l’équipe Data d’une société financière fictive nommée **Prêt à dépenser**, spécialisée dans les crédits à la consommation pour des profils sans historique de prêt.
 
-Ce traitement s’inscrit dans le développement d’une application mobile éducative, destinée à sensibiliser le public à la **biodiversité des fruits** et à amorcer un futur moteur de reconnaissance d’images pour les cueilleurs automatisés.
-
----
-
-## 🧱 Objectifs techniques
-
-- Reprendre et compléter le **notebook PySpark** d’un précédent alternant
-- Implémenter une **réduction de dimension (PCA)** distribuée sur Spark
-- Diffuser les **poids d’un modèle TensorFlow** sur les nœuds du cluster via Spark `broadcast`
-- Déployer et tester une architecture **EMR (Elastic Map Reduce)** sur AWS
-- Respecter les contraintes **RGPD** en choisissant une région de cloud européenne
-- Documenter et démontrer la chaîne de traitement de manière claire et reproductible
+Après avoir développé un **modèle de scoring crédit**, l’objectif de cette mission a été de concevoir un **dashboard interactif**, clair et pédagogique, destiné aux **chargés de relation client** afin de justifier les décisions d’octroi de crédit auprès des clients.
 
 ---
 
-## ⚙️ Environnement Cloud & Big Data
+## 🧭 Objectifs fonctionnels
 
-- **Cloud provider** : AWS  
-- **Stockage** : S3 (datasets & résultats)  
-- **Traitement distribué** : PySpark sur cluster EMR  
-- **Sécurité & coûts** :
-  - Région : `eu-west-1` (Irlande) pour conformité RGPD
-  - Cluster EMR lancé temporairement uniquement pour les tests (<10€)
-  - Développement et debug réalisés en local pour optimiser les coûts
-
----
-
-## 📁 Contenu du projet
-
-- `notebook_pyspark_fruits.ipynb` : traitement distribué avec PySpark (lecture des images, PCA, broadcast)
-- `script_broadcast_tensorflow.py` : diffusion des poids du modèle pour l’inférence en parallèle
-- `emr_setup.md` : guide étape par étape de création et configuration d’un cluster EMR
-- `README.md` : ce document
+- Visualiser le **score de crédit** et la **probabilité associée** d’un client (accepté/refusé)
+- Comparer ses **caractéristiques personnelles** avec la population générale ou un groupe filtré
+- Fournir une **interprétation du score** via des explications locales (SHAP) et globales
+- Intégrer une **API REST** pour récupérer le score d’un client existant ou simuler un nouveau dossier
+- Assurer la **compréhensibilité pour les non-experts**
+- Respecter les standards d’**accessibilité** (WCAG)
+- Déployer le dashboard sur le **cloud (Streamlit Cloud)** pour accès distant
 
 ---
 
-## 🧪 Étapes du traitement PySpark
+## ⚙️ Stack technique
 
-1. Chargement des images de fruits depuis AWS S3
-2. Transformation et vectorisation des images
-3. Réduction de dimension via **PCA Spark MLlib**
-4. **Broadcast des poids TensorFlow** et simulation d’inférence distribuée
-5. Sauvegarde des résultats dans S3
-
----
-
-## 📦 Téléchargement du projet
-
-Le projet complet (scripts, notebooks, documentation, données d’exemple) est disponible ici 
----
-
-## 🛡️ RGPD & bonnes pratiques
-
-- Traitement conforme RGPD (région AWS : Europe)
-- Données anonymisées, aucun usage personnel ou sensible
-- Coût maîtrisé du cloud (instance arrêtée hors démonstration)
-- Scripts commentés, reproductibles, conformes aux standards PEP8
+- **Python** : traitement, visualisation, API calls
+- **Streamlit** : interface utilisateur interactive
+- **Plotly / Matplotlib / Seaborn** : visualisations
+- **XGBoost / Logistic Regression** : modèles de scoring
+- **SHAP** : interprétation locale des prédictions
+- **API** : Flask + Render pour prédiction en ligne
+- **Hébergement** : Streamlit Cloud
 
 ---
 
-## 💬 Retour critique
+## 📂 Structure du projet
 
-L’approche EMR offre une **bonne scalabilité** pour des projets de vision par ordinateur en croissance. Toutefois, la diffusion des modèles lourds en TensorFlow reste coûteuse et doit être optimisée. Une piste d’amélioration serait l’utilisation de **Databricks** pour simplifier l’intégration et améliorer la collaboration.
+credit_scoring_dashboard/
+│
+├── app.py ← Code principal du dashboard Streamlit
+├── api_client.py ← Requêtes vers l’API de scoring
+├── utils.py ← Fonctions d’analyse et SHAP
+├── model/best_model.pkl ← Modèle de scoring entraîné
+├── data/application_train.csv ← Données client (échantillon anonymisé)
+├── assets/ ← Images, logos, et icônes
+└── README.md ← Ce fichier
+
+
+# 🧠 Mini MoMi – Veille Technique : NLP avec Modern BERT vs TF-IDF
+
+## 🎯 Objectif
+
+Dans le cadre de ma mission de veille technique chez *Prêt à dépenser*, j’ai étudié et comparé une approche classique d’analyse de texte (TF-IDF + régression logistique) avec une méthode plus récente basée sur **Modern BERT**, un modèle pré-entraîné de la famille des Transformers.
+
+L’objectif : tester les performances et l’interprétabilité de **Modern BERT** dans un contexte réel, en l’appliquant aux données clients (commentaires, descriptions) utilisées dans nos projets de scoring ou de classification produit.
 
 ---
 
-## 👤 Auteur
+## 🧪 Méthodes comparées
 
-**Noureddine YAMOUNI**  
-Ingénieur en Intelligence Artificielle – Data Scientist  
-📫 Contact : yamouninoureddine99@gmail.com
+| Méthode | Description | Modèle | Interprétabilité | Temps d’entraînement |
+|--------|-------------|--------|------------------|----------------------|
+| **TF-IDF** | Extraction manuelle de features | LogisticRegression | Bonne (coefficients) | Rapide |
+| **Modern BERT** | Embeddings contextuels (transformer) | DistilBERT + MLP | Moyenne (via attention/SHAP) | Plus long |
+
+---
+
+## 🔧 Implémentation
+
+- **Données** : texte client anonymisé / jeu de classification public
+- **Prétraitement** : nettoyage, tokenisation
+- **Modèle Modern BERT** : `distilbert-base-uncased` via HuggingFace Transformers
+- **Évaluation** : Accuracy, F1, temps de calcul, explications locales (SHAP)
+
+---
+
+## 📌 Résultats observés
+
+- 📈 BERT offre de meilleures performances sur des textes ambigus ou non structurés.
+- ⚙️ TF-IDF reste plus rapide et plus transparent, utile pour des déploiements rapides.
+- 🧠 Les représentations de BERT permettent d’intégrer du contexte sémantique inaccessible avec TF-IDF.
+
+## 🔗 Références
+
+- [Devlin et al., 2018 – BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)  
+- [HuggingFace Transformers](https://huggingface.co/transformers/)  
+- [Papers with Code –]()
