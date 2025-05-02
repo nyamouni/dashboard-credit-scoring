@@ -2,7 +2,7 @@ import pickle
 import pandas as pd
 import shap
 
-# Charger le modèle (assure-toi que le chemin est correct depuis ton app Streamlit)
+# Charger le modèle 
 with open("best_model.pkl", "rb") as f:
     model = pickle.load(f)
 
